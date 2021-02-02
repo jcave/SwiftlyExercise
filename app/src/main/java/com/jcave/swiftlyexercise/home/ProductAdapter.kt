@@ -15,17 +15,34 @@ class ProductAdapter(var productList: List<ItemResultsResponse.ManagerSpecial>) 
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_item, parent, false)
-        return ProductHolder(view)
+        val view: View
+        val holder: RecyclerView.ViewHolder
+
+        when (viewType) {
+            VIEW_HEADER -> {
+                view =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.layout_specials_header, parent, false)
+                holder = HeaderHolder(view)
+            }
+            else -> {
+                view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.layout_item, parent, false)
+                holder = ProductHolder(view)
+            }
+        }
+
+        return holder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        bindProduct(holder as ProductHolder, position)
+        when (holder.itemViewType) {
+            VIEW_PRODUCT -> bindProduct(holder as ProductHolder, position)
+        }
     }
 
     private fun bindProduct(holder: ProductHolder, position: Int) {
-        val product = productList[position]
+        val product = productList[position - 1]
 
         holder.apply {
             price.text = product.originalPrice.toString()
@@ -40,20 +57,35 @@ class ProductAdapter(var productList: List<ItemResultsResponse.ManagerSpecial>) 
         }
     }
 
-    override fun getItemCount(): Int {
-        return productList.count()
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> VIEW_HEADER
+            else -> VIEW_PRODUCT
+        }
     }
 
-    public fun update(productList: List<ItemResultsResponse.ManagerSpecial>){
+    override fun getItemCount(): Int {
+        return productList.count() + 1
+    }
+
+    fun update(productList: List<ItemResultsResponse.ManagerSpecial>) {
         this.productList = productList
         notifyDataSetChanged()
     }
+
+    class HeaderHolder(v: View) : RecyclerView.ViewHolder(v)
 
     class ProductHolder(v: View) : RecyclerView.ViewHolder(v) {
         val price: TextView = v.findViewById(R.id.text_price)
         val salePrice: TextView = v.findViewById(R.id.text_sale_price)
         val title: TextView = v.findViewById(R.id.text_title)
         val imgProduct: ImageView = v.findViewById(R.id.image_item)
+    }
+
+
+    companion object {
+        private const val VIEW_HEADER = 0
+        private const val VIEW_PRODUCT = 1
     }
 
 }

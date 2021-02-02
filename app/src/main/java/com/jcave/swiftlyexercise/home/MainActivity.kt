@@ -26,6 +26,16 @@ class MainActivity : AppCompatActivity() {
         productAdapter = ProductAdapter(emptyList())
         val productLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
+        productLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == 0) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
+
         binding.recyclerview.apply {
             adapter = productAdapter
             layoutManager = productLayoutManager
