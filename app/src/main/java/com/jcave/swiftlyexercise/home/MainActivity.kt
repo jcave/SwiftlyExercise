@@ -1,10 +1,10 @@
-package com.fitbod.swiftlyexercise.home
+package com.jcave.swiftlyexercise.home
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.fitbod.swiftlyexercise.R
+import com.jcave.swiftlyexercise.R
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,8 +1,8 @@
-package com.fitbod.swiftlyexercise.home
+package com.jcave.swiftlyexercise.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fitbod.swiftlyexercise.repository.ProductRepository
+import com.jcave.swiftlyexercise.repository.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

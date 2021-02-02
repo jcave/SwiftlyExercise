@@ -1,10 +1,10 @@
-package com.fitbod.swiftlyexercise.repository
+package com.jcave.swiftlyexercise.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.fitbod.swiftlyexercise.api.ApiProvider
-import com.fitbod.swiftlyexercise.api.ApiService
-import com.fitbod.swiftlyexercise.models.ItemResultsResponse
+import com.jcave.swiftlyexercise.api.ApiProvider
+import com.jcave.swiftlyexercise.api.ApiService
+import com.jcave.swiftlyexercise.models.ItemResultsResponse
 
 class ProductRepository {
 

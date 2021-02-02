@@ -1,4 +1,4 @@
-package com.fitbod.swiftlyexercise
+package com.jcave.swiftlyexercise
 
 import org.junit.Test
 

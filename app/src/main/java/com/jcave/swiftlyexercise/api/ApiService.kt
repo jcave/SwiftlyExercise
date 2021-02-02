@@ -1,6 +1,6 @@
-package com.fitbod.swiftlyexercise.api
+package com.jcave.swiftlyexercise.api
 
-import com.fitbod.swiftlyexercise.models.ItemResultsResponse
+import com.jcave.swiftlyexercise.models.ItemResultsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

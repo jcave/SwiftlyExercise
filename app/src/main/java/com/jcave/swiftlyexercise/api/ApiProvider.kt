@@ -1,4 +1,4 @@
-package com.fitbod.swiftlyexercise.api
+package com.jcave.swiftlyexercise.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

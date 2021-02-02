@@ -1,4 +1,4 @@
-package com.fitbod.swiftlyexercise.models
+package com.jcave.swiftlyexercise.models
 
 import com.google.gson.annotations.SerializedName
 

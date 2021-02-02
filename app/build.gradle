@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.fitbod.swiftlyexercise"
+        applicationId "com.jcave.swiftlyexercise"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
