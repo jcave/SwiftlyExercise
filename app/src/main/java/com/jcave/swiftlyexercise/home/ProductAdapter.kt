@@ -1,21 +1,25 @@
 package com.jcave.swiftlyexercise.home
 
-import android.util.Log
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jcave.swiftlyexercise.R
-import com.jcave.swiftlyexercise.models.ItemResultsResponse
+import com.jcave.swiftlyexercise.models.ProductResultsResponse
+import com.jcave.swiftlyexercise.utils.Utils
+
 
 class ProductAdapter(
-    var productList: List<ItemResultsResponse.ManagerSpecial>,
-    var widthInPx: Int
+    var products: ProductResultsResponse = ProductResultsResponse(),
+    var baseUnitWidth: Float = 0f,
+    var baseUnitHeight: Float = 0f
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -33,7 +37,7 @@ class ProductAdapter(
             else -> {
                 view =
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.layout_item, parent, false)
+                        .inflate(R.layout.layout_product, parent, false)
                 holder = ProductHolder(view)
             }
         }
@@ -48,33 +52,32 @@ class ProductAdapter(
     }
 
     private fun bindProduct(holder: ProductHolder, position: Int) {
-        val product = productList[position - 1]
+        val product = products.managerSpecials[position - 1]
 
         holder.apply {
 
-            val baseUnitWidth = (widthInPx / 16.0)
-            val baseUnitHeight = (widthInPx / 16.0)
             val width = (product.width.toFloat() * baseUnitWidth).toInt()
             val height = (product.height.toFloat() * baseUnitHeight).toInt()
 
-            Log.i("OUTPUT", "${product.width} :: ${product.height} :: ${product.displayName}")
-            Log.i(
-                "OUTPUT",
-                "${baseUnitWidth.toInt()} :: ${baseUnitHeight.toInt()} :: $width :: $height"
+            val formattedListPrice = Utils.formatCurrency(product.originalPrice)
+            val spannedPrice = SpannableString(formattedListPrice)
+            spannedPrice.setSpan(
+                StrikethroughSpan(),
+                0,
+                formattedListPrice.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            Log.i("OUTPUT", "---------")
-            price.text = product.price.toString()
-            salePrice.text = product.price.toString()
+
+            price.text = spannedPrice
+            salePrice.text = Utils.formatCurrency(product.price)
             title.text = product.displayName
             imgProduct.load(product.imageUrl) {
                 crossfade(true)
             }
 
-
             layout.layoutParams.width = width
             layout.layoutParams.height = height
         }
-
 
     }
 
@@ -86,11 +89,17 @@ class ProductAdapter(
     }
 
     override fun getItemCount(): Int {
-        return productList.count() + 1
+        return products.managerSpecials.count() + 1
     }
 
-    fun update(productList: List<ItemResultsResponse.ManagerSpecial>) {
-        this.productList = productList
+    fun update(
+        productResults: ProductResultsResponse,
+        baseUnitWidth: Float,
+        baseUnitHeight: Float
+    ) {
+        this.products = productResults
+        this.baseUnitHeight = baseUnitHeight
+        this.baseUnitWidth = baseUnitWidth
         notifyDataSetChanged()
     }
 
@@ -102,9 +111,8 @@ class ProductAdapter(
         val title: TextView = v.findViewById(R.id.text_title)
 
         val imgProduct: ImageView = v.findViewById(R.id.image_item)
-        val layout: ConstraintLayout = v.findViewById(R.id.constraint_layout_product)
+        val layout: FrameLayout = v.findViewById(R.id.layout_product)
     }
-
 
     companion object {
         private const val VIEW_HEADER = 0

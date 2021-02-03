@@ -1,16 +1,14 @@
 package com.jcave.swiftlyexercise.home
 
-import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.jcave.swiftlyexercise.databinding.ActivityMainBinding
-import com.jcave.swiftlyexercise.models.ItemResultsResponse
+import com.jcave.swiftlyexercise.models.ProductResultsResponse
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,15 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.productLiveData.observe(this, {
-            updateView(it.managerSpecials)
+            updateView(it)
         })
 
-
-        val metrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-        val width = metrics.widthPixels
-
-        productAdapter = ProductAdapter(emptyList(), width)
+        productAdapter = ProductAdapter()
         val productLayoutManager = FlexboxLayoutManager(this).apply {
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.CENTER
@@ -47,8 +40,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun updateView(productList: List<ItemResultsResponse.ManagerSpecial>) {
-        productAdapter.update(productList)
+    private fun updateView(productResponse: ProductResultsResponse) {
+
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        val widthOfDisplay = metrics.widthPixels
+
+        val canvasUnit = productResponse.canvasUnit.toFloat()
+        val baseUnitWidth = (widthOfDisplay / canvasUnit)
+        val baseUnitHeight = (widthOfDisplay / canvasUnit)
+
+        productAdapter.update(productResponse, baseUnitWidth, baseUnitHeight)
     }
 
 }

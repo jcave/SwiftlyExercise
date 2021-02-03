@@ -2,7 +2,7 @@ package com.jcave.swiftlyexercise.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ItemResultsResponse(
+data class ProductResultsResponse(
     val canvasUnit: Int = 0,
     val managerSpecials: List<ManagerSpecial> = listOf()
 ) {
