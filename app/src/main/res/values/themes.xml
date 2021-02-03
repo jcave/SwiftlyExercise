@@ -15,7 +15,31 @@
 
 
     <style name="Pricing">
-        <item name="android:textColor">@color/green</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">@dimen/xxx_large</item>
     </style>
+
+    <style name="Pricing.Sale">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="Pricing.List">
+        <item name="android:textColor">@color/dark_gray</item>
+    </style>
+
+    <style name="TextPrimary">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextPrimary.Small" parent="@style/TextPrimary">
+        <item name="android:textSize">@dimen/small</item>
+    </style>
+
+    <style name="TextPrimary.Medium" parent="@style/TextPrimary">
+        <item name="android:textSize">@dimen/medium</item>
+    </style>
+
+    <style name="TextPrimary.Large" parent="@style/TextPrimary">
+        <item name="android:textSize">@dimen/large</item>
+    </style>
+
 </resources>
