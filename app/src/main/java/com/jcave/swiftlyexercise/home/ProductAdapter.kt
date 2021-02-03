@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jcave.swiftlyexercise.R
@@ -51,6 +52,7 @@ class ProductAdapter(
         }
     }
 
+
     private fun bindProduct(holder: ProductHolder, position: Int) {
         val product = products.managerSpecials[position - 1]
 
@@ -71,6 +73,7 @@ class ProductAdapter(
             price.text = spannedPrice
             salePrice.text = Utils.formatCurrency(product.price)
             title.text = product.displayName
+            dimensions.text = "${product.width} / ${product.height}"
             imgProduct.load(product.imageUrl) {
                 crossfade(true)
             }
@@ -97,10 +100,16 @@ class ProductAdapter(
         baseUnitWidth: Float,
         baseUnitHeight: Float
     ) {
-        this.products = productResults
+
         this.baseUnitHeight = baseUnitHeight
         this.baseUnitWidth = baseUnitWidth
-        notifyDataSetChanged()
+
+        val diffResult = DiffUtil.calculateDiff(
+            ProductDiffCallback(products.managerSpecials, productResults.managerSpecials)
+        )
+
+        this.products = productResults
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class HeaderHolder(v: View) : RecyclerView.ViewHolder(v)
@@ -109,7 +118,7 @@ class ProductAdapter(
         val price: TextView = v.findViewById(R.id.text_price)
         val salePrice: TextView = v.findViewById(R.id.text_sale_price)
         val title: TextView = v.findViewById(R.id.text_title)
-
+        val dimensions: TextView = v.findViewById(R.id.text_dimensions)
         val imgProduct: ImageView = v.findViewById(R.id.image_item)
         val layout: FrameLayout = v.findViewById(R.id.layout_product)
     }
