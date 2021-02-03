@@ -1,11 +1,17 @@
 package com.jcave.swiftlyexercise.home
 
+import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.jcave.swiftlyexercise.databinding.ActivityMainBinding
 import com.jcave.swiftlyexercise.models.ItemResultsResponse
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,17 +29,15 @@ class MainActivity : AppCompatActivity() {
             updateView(it.managerSpecials)
         })
 
-        productAdapter = ProductAdapter(emptyList())
-        val productLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
-        productLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (position == 0) {
-                    2
-                } else {
-                    1
-                }
-            }
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        val width = metrics.widthPixels
+
+        productAdapter = ProductAdapter(emptyList(), width)
+        val productLayoutManager = FlexboxLayoutManager(this).apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.CENTER
         }
 
         binding.recyclerview.apply {
@@ -46,4 +50,5 @@ class MainActivity : AppCompatActivity() {
     private fun updateView(productList: List<ItemResultsResponse.ManagerSpecial>) {
         productAdapter.update(productList)
     }
+
 }
