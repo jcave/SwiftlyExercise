@@ -40,6 +40,12 @@ class ProductAdapter(
                         .inflate(R.layout.layout_product_small, parent, false)
                 holder = ProductHolder(view)
             }
+            VIEW_PRODUCT_WIDE -> {
+                view =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.layout_product_wide, parent, false)
+                holder = ProductHolder(view)
+            }
             else -> {
                 view =
                     LayoutInflater.from(parent.context)
@@ -53,7 +59,10 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            VIEW_PRODUCT, VIEW_PRODUCT_SMALL -> bindProduct(holder as ProductHolder, position)
+            VIEW_PRODUCT, VIEW_PRODUCT_SMALL, VIEW_PRODUCT_WIDE -> bindProduct(
+                holder as ProductHolder,
+                position
+            )
         }
     }
 
@@ -78,7 +87,7 @@ class ProductAdapter(
             price.text = spannedPrice
             salePrice.text = Utils.formatCurrency(product.price)
             title.text = product.displayName
-            dimensions.text = "${product.width} / ${product.height}"
+
             imgProduct.load(product.imageUrl) {
                 crossfade(true)
             }
@@ -97,6 +106,8 @@ class ProductAdapter(
 
         if (item.width <= 5) {
             return VIEW_PRODUCT_SMALL
+        } else if (item.width > 10 && item.height < 6) {
+            return VIEW_PRODUCT_WIDE
         }
 
         return VIEW_PRODUCT
@@ -129,8 +140,7 @@ class ProductAdapter(
         val price: TextView = v.findViewById(R.id.text_price)
         val salePrice: TextView = v.findViewById(R.id.text_sale_price)
         val title: TextView = v.findViewById(R.id.text_title)
-        val dimensions: TextView = v.findViewById(R.id.text_dimensions)
-        val imgProduct: ImageView = v.findViewById(R.id.image_item)
+s        val imgProduct: ImageView = v.findViewById(R.id.image_item)
         val layout: FrameLayout = v.findViewById(R.id.layout_product)
     }
 
@@ -138,6 +148,7 @@ class ProductAdapter(
         private const val VIEW_HEADER = 0
         private const val VIEW_PRODUCT = 1
         private const val VIEW_PRODUCT_SMALL = 2
+        private const val VIEW_PRODUCT_WIDE = 3
     }
 
 }

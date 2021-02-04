@@ -31,6 +31,12 @@
         <item name="android:textColor">@color/dark_gray</item>
     </style>
 
+    <style name="Pricing.List.XLarge">
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/x_large</item>
+    </style>
+
+
     <style name="TextPrimary">
         <item name="android:textColor">@color/black</item>
     </style>
