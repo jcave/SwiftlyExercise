@@ -3,4 +3,7 @@
 
     <!-- content descriptions -->
     <string name="content_description_product_image">Product image</string>
+
+    <!-- text -->
+    <string name="text_managers_specials">Manager\'s Specials</string>
 </resources>

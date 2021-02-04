@@ -2,6 +2,7 @@ package com.jcave.swiftlyexercise.home
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.flexbox.FlexDirection
@@ -41,16 +42,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateView(productResponse: ProductResultsResponse) {
-
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
         val widthOfDisplay = metrics.widthPixels
 
+        val products = productResponse.managerSpecials
         val canvasUnit = productResponse.canvasUnit.toFloat()
         val baseUnitWidth = (widthOfDisplay / canvasUnit)
         val baseUnitHeight = (widthOfDisplay / canvasUnit)
 
-        productAdapter.update(productResponse.managerSpecials, baseUnitWidth, baseUnitHeight)
+        productAdapter.update(products, baseUnitWidth, baseUnitHeight)
+
+        if (products.isNotEmpty()) {
+            binding.progressBar.visibility = View.GONE
+            binding.recyclerview.visibility = View.VISIBLE
+        }
     }
 
 }

@@ -63,9 +63,17 @@ class ProductAdapter(
                 holder as ProductHolder,
                 position
             )
+            VIEW_HEADER -> bindHeader(holder as HeaderHolder)
         }
     }
 
+    private fun bindHeader(holder: HeaderHolder) {
+        if(products.isNotEmpty()) {
+            holder.title.visibility = View.VISIBLE
+        } else {
+            holder.title.visibility = View.INVISIBLE
+        }
+    }
 
     private fun bindProduct(holder: ProductHolder, position: Int) {
         val product = products[position - 1]
@@ -134,13 +142,15 @@ class ProductAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class HeaderHolder(v: View) : RecyclerView.ViewHolder(v)
+    class HeaderHolder(v: View) : RecyclerView.ViewHolder(v) {
+        val title: TextView = v.findViewById(R.id.text_title)
+    }
 
     class ProductHolder(v: View) : RecyclerView.ViewHolder(v) {
         val price: TextView = v.findViewById(R.id.text_price)
         val salePrice: TextView = v.findViewById(R.id.text_sale_price)
         val title: TextView = v.findViewById(R.id.text_title)
-s        val imgProduct: ImageView = v.findViewById(R.id.image_item)
+        val imgProduct: ImageView = v.findViewById(R.id.image_item)
         val layout: FrameLayout = v.findViewById(R.id.layout_product)
     }
 
