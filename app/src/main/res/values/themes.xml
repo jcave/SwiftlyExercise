@@ -15,11 +15,16 @@
 
 
     <style name="Pricing">
-        <item name="android:textSize">@dimen/xxx_large</item>
+        <item name="android:textSize">@dimen/xx_large</item>
     </style>
 
     <style name="Pricing.Sale">
         <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="Pricing.Sale.XLarge">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/x_large</item>
     </style>
 
     <style name="Pricing.List">
@@ -30,15 +35,15 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="TextPrimary.Small" parent="@style/TextPrimary">
+    <style name="TextPrimary.Small">
         <item name="android:textSize">@dimen/small</item>
     </style>
 
-    <style name="TextPrimary.Medium" parent="@style/TextPrimary">
+    <style name="TextPrimary.Medium">
         <item name="android:textSize">@dimen/medium</item>
     </style>
 
-    <style name="TextPrimary.Large" parent="@style/TextPrimary">
+    <style name="TextPrimary.Large">
         <item name="android:textSize">@dimen/large</item>
     </style>
 

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val baseUnitWidth = (widthOfDisplay / canvasUnit)
         val baseUnitHeight = (widthOfDisplay / canvasUnit)
 
-        productAdapter.update(productResponse, baseUnitWidth, baseUnitHeight)
+        productAdapter.update(productResponse.managerSpecials, baseUnitWidth, baseUnitHeight)
     }
 
 }

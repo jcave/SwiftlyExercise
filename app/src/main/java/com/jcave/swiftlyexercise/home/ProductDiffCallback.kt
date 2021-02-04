@@ -1,12 +1,11 @@
 package com.jcave.swiftlyexercise.home
 
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import com.jcave.swiftlyexercise.models.ProductResultsResponse
+import com.jcave.swiftlyexercise.models.Product
 
 class ProductDiffCallback(
-    private val oldList: List<ProductResultsResponse.ManagerSpecial>,
-    private val newList: List<ProductResultsResponse.ManagerSpecial>
+    private val oldList: List<Product>,
+    private val newList: List<Product>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
@@ -23,9 +22,5 @@ class ProductDiffCallback(
 
         return name == name2 && height == height2 && url == url2
     }
-//
-//    @Nullable
-//    override fun getChangePayload(oldPosition: Int, newPosition: Int): Any? {
-//        return super.getChangePayload(oldPosition, newPosition)
-//    }
+
 }

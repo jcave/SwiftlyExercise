@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jcave.swiftlyexercise.R
-import com.jcave.swiftlyexercise.models.ProductResultsResponse
+import com.jcave.swiftlyexercise.models.Product
 import com.jcave.swiftlyexercise.utils.Utils
 
-
 class ProductAdapter(
-    var products: ProductResultsResponse = ProductResultsResponse(),
+    var products: List<Product> = emptyList(),
     var baseUnitWidth: Float = 0f,
     var baseUnitHeight: Float = 0f
 ) :
@@ -35,6 +34,12 @@ class ProductAdapter(
                         .inflate(R.layout.layout_specials_header, parent, false)
                 holder = HeaderHolder(view)
             }
+            VIEW_PRODUCT_SMALL -> {
+                view =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.layout_product_small, parent, false)
+                holder = ProductHolder(view)
+            }
             else -> {
                 view =
                     LayoutInflater.from(parent.context)
@@ -48,13 +53,13 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            VIEW_PRODUCT -> bindProduct(holder as ProductHolder, position)
+            VIEW_PRODUCT, VIEW_PRODUCT_SMALL -> bindProduct(holder as ProductHolder, position)
         }
     }
 
 
     private fun bindProduct(holder: ProductHolder, position: Int) {
-        val product = products.managerSpecials[position - 1]
+        val product = products[position - 1]
 
         holder.apply {
 
@@ -85,18 +90,24 @@ class ProductAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> VIEW_HEADER
-            else -> VIEW_PRODUCT
+
+        if (position == 0) return VIEW_HEADER
+
+        val item = products[position - 1]
+
+        if (item.width <= 5) {
+            return VIEW_PRODUCT_SMALL
         }
+
+        return VIEW_PRODUCT
     }
 
     override fun getItemCount(): Int {
-        return products.managerSpecials.count() + 1
+        return products.count() + 1
     }
 
     fun update(
-        productResults: ProductResultsResponse,
+        productResults: List<Product>,
         baseUnitWidth: Float,
         baseUnitHeight: Float
     ) {
@@ -105,7 +116,7 @@ class ProductAdapter(
         this.baseUnitWidth = baseUnitWidth
 
         val diffResult = DiffUtil.calculateDiff(
-            ProductDiffCallback(products.managerSpecials, productResults.managerSpecials)
+            ProductDiffCallback(products, productResults)
         )
 
         this.products = productResults
@@ -126,6 +137,7 @@ class ProductAdapter(
     companion object {
         private const val VIEW_HEADER = 0
         private const val VIEW_PRODUCT = 1
+        private const val VIEW_PRODUCT_SMALL = 2
     }
 
 }
