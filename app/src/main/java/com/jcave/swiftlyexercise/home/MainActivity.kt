@@ -11,7 +11,6 @@ import com.google.android.flexbox.JustifyContent
 import com.jcave.swiftlyexercise.databinding.ActivityMainBinding
 import com.jcave.swiftlyexercise.models.ProductResultsResponse
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.productLiveData.observe(this, {
+            binding.swipeToRefresh.isRefreshing = false
             updateView(it)
         })
 
@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerview.apply {
             adapter = productAdapter
             layoutManager = productLayoutManager
+        }
+
+        binding.swipeToRefresh.setOnRefreshListener {
+            binding.swipeToRefresh.isRefreshing = true
+            mainActivityViewModel.updateProducts()
         }
 
     }

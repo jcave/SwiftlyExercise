@@ -12,6 +12,10 @@ class MainActivityViewModel : ViewModel() {
     val productLiveData = productRepository.productLiveData
 
     init {
+        updateProducts()
+    }
+
+    fun updateProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getItems()
         }
