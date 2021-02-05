@@ -1,6 +1,7 @@
 # Swiftly Exercise
 
-To view the app, clone the repository, open it in Android Studio, then choose "Run 'app'".
+To view the app, clone the repository and open the folder in Android Studio. Once open, let it sync packages 
+then choose "Run 'app'". You may need Kotlin 1.4.30 installed in Android Studio.
 
 1. Based on the canvasUnits (16 total) and height/width data that come back from the endpoint, some tiles are
 very small (3x3 units) or very wide (14x4). Because of this, I created 3 different layouts to be used.
