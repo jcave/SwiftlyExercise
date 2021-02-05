@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.productLiveData.observe(this, {
-            binding.swipeToRefresh.isRefreshing = false
             updateView(it)
         })
 
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             mainActivityViewModel.updateProducts()
         }
 
+        binding.swipeToRefresh.isRefreshing = true
     }
 
     private fun updateView(productResponse: ProductResultsResponse) {
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         productAdapter.update(products, baseUnitWidth, baseUnitHeight)
 
         if (products.isNotEmpty()) {
-            binding.progressBar.visibility = View.GONE
+            binding.swipeToRefresh.isRefreshing = false
             binding.recyclerview.visibility = View.VISIBLE
         }
     }
