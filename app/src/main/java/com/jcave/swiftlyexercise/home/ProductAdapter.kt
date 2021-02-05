@@ -68,7 +68,7 @@ class ProductAdapter(
     }
 
     private fun bindHeader(holder: HeaderHolder) {
-        if(products.isNotEmpty()) {
+        if (products.isNotEmpty()) {
             holder.title.visibility = View.VISIBLE
         } else {
             holder.title.visibility = View.INVISIBLE
@@ -79,12 +79,11 @@ class ProductAdapter(
         val product = products[position - 1]
 
         holder.apply {
-
             val width = (product.width.toFloat() * baseUnitWidth).toInt()
             val height = (product.height.toFloat() * baseUnitHeight).toInt()
-
             val formattedListPrice = Utils.formatCurrency(product.originalPrice)
             val spannedPrice = SpannableString(formattedListPrice)
+
             spannedPrice.setSpan(
                 StrikethroughSpan(),
                 0,
@@ -103,11 +102,9 @@ class ProductAdapter(
             layout.layoutParams.width = width
             layout.layoutParams.height = height
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
-
         if (position == 0) return VIEW_HEADER
 
         val item = products[position - 1]
@@ -121,9 +118,7 @@ class ProductAdapter(
         return VIEW_PRODUCT
     }
 
-    override fun getItemCount(): Int {
-        return products.count() + 1
-    }
+    override fun getItemCount(): Int = products.count() + 1
 
     fun update(
         productResults: List<Product>,
@@ -131,14 +126,15 @@ class ProductAdapter(
         baseUnitHeight: Float
     ) {
 
+        val oldProductList = products
         this.baseUnitHeight = baseUnitHeight
         this.baseUnitWidth = baseUnitWidth
 
         val diffResult = DiffUtil.calculateDiff(
-            ProductDiffCallback(products, productResults)
+            ProductDiffCallback(oldProductList, productResults)
         )
 
-        this.products = productResults
+        products = productResults
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -152,6 +148,25 @@ class ProductAdapter(
         val title: TextView = v.findViewById(R.id.text_title)
         val imgProduct: ImageView = v.findViewById(R.id.image_item)
         val layout: FrameLayout = v.findViewById(R.id.layout_product)
+    }
+
+    class ProductDiffCallback(
+        private val oldList: List<Product>,
+        private val newList: List<Product>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].displayName == newList[newItemPosition].displayName
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
     }
 
     companion object {
