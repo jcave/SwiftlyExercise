@@ -11,15 +11,18 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/light_gray</item>
     </style>
 
 
     <style name="Pricing">
         <item name="android:textSize">@dimen/xx_large</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Pricing.Sale">
         <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Pricing.Sale.XLarge">
@@ -51,6 +54,10 @@
 
     <style name="TextPrimary.Large">
         <item name="android:textSize">@dimen/large</item>
+    </style>
+
+    <style name="TextPrimary.XLarge">
+        <item name="android:textSize">@dimen/x_large</item>
     </style>
 
 </resources>

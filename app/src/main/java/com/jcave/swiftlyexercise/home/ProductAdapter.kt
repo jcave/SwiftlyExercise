@@ -125,13 +125,11 @@ class ProductAdapter(
         baseUnitWidth: Float,
         baseUnitHeight: Float
     ) {
-
-        val oldProductList = products
         this.baseUnitHeight = baseUnitHeight
         this.baseUnitWidth = baseUnitWidth
 
         val diffResult = DiffUtil.calculateDiff(
-            ProductDiffCallback(oldProductList, productResults)
+            ProductDiffCallback(products, productResults)
         )
 
         products = productResults

@@ -30,4 +30,14 @@ data class Product(
         return true
     }
 
+    override fun hashCode(): Int {
+        var result = displayName.hashCode()
+        result = 31 * result + height
+        result = 31 * result + imageUrl.hashCode()
+        result = 31 * result + originalPrice.hashCode()
+        result = 31 * result + price.hashCode()
+        result = 31 * result + width
+        return result
+    }
+
 }

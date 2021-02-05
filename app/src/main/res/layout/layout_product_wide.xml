@@ -46,8 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_x_small"
                 android:textAlignment="viewStart"
-                android:textStyle="bold"
-                android:theme="@style/TextPrimary.Large"
+                android:theme="@style/TextPrimary.XLarge"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/text_sale_price"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +82,6 @@
                 app:layout_constraintStart_toEndOf="@+id/text_price"
                 app:layout_constraintTop_toBottomOf="@+id/text_title"
                 tools:text="$1.00" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
